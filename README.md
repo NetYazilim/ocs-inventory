@@ -9,6 +9,5 @@ http://localhost/ocsreports/
 Other Docker images
 
 https://github.com/OCSInventory-NG/OCSInventory-Docker-Image
-
 https://github.com/zanhsieh/docker-ocs-inventory-ng
 
