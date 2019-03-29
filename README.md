@@ -1,4 +1,4 @@
-﻿# OCS Inventory
+# OCS Inventory
 ## How to use this image
 ```
 docker run --name mysql -e MYSQL_ROOT_PASSWORD=secret -d mysql:5.7
@@ -9,5 +9,6 @@ http://localhost/ocsreports/
 Other Docker images
 
 https://github.com/OCSInventory-NG/OCSInventory-Docker-Image
+
 https://github.com/zanhsieh/docker-ocs-inventory-ng
 
