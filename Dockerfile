@@ -1,7 +1,7 @@
 FROM alpine:edge
 LABEL maintainer "Levent SAGIROGLU <LSagiroglu@gmail.com>"
 
-ARG VERSION=2.5
+ARG VERSION=2.6RC
 
 EXPOSE 80
 ENV OCS_DBHOST ""
@@ -14,7 +14,7 @@ RUN apk add --update --no-cache bash tar gzip wget make apache2 \
             php7-apache2 php7 php7-mysqli php7-pdo_mysql php7-gd php7-memcached \
             php7-snmp php7-xml php7-simplexml php7-json php7-pspell php7-mbstring php7-zip php7-soap php7-curl \
             py-pip libxml2 perl-xml-simple perl-digest-sha1 perl-compress-raw-zlib perl-dbi \
-            perl-dbd-mysql perl-dbi perl-net-ip perl-soap-lite apache2-mod-perl
+            perl-dbd-mysql perl-net-ip perl-soap-lite apache2-mod-perl perl-switch
 ############# php7-xmlrpc php7-xmlreader php7-xmlwriter
 WORKDIR /tmp/
 RUN wget https://www.cpan.org/authors/id/P/PH/PHRED/Apache-DBI-1.12.tar.gz
@@ -26,8 +26,8 @@ RUN perl Makefile.PL ;\
 
 #############
 WORKDIR /tmp/ocs-setup/
-RUN wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/${VERSION}/OCSNG_UNIX_SERVER_${VERSION}.tar.gz
-RUN tar -xvf OCSNG_UNIX_SERVER_${VERSION}.tar.gz --strip 1
+RUN wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/${VERSION}/OCSNG_UNIX_SERVER_2.6_RC.tar.gz
+RUN tar -xvf OCSNG_UNIX_SERVER_*.tar.gz --strip 1
 WORKDIR /tmp/ocs-setup/Apache
 RUN perl Makefile.PL ;\
     make ;\
@@ -36,7 +36,7 @@ RUN perl Makefile.PL ;\
     cp /tmp/ocs-setup/etc/logrotate.d/ocsinventory-server /etc/logrotate.d/ ;\
 #         mkdir -p /etc/ocsinventory-server/{plugins,perl} ;\
     bash -c 'mkdir -p /etc/ocsinventory-server/{plugins,perl}' ;\
-    mkdir -p /usr/share/ocsinventory-reports
+    mkdir -p /usr/share/ocsinventory-reports/ocsreports/upload
 
 WORKDIR /tmp/ocs-setup/
 RUN cp -R ocsreports /usr/share/ocsinventory-reports/ ;\
@@ -62,13 +62,13 @@ COPY *.conf /etc/apache2/conf.d/
 #### OPTIONAL PLUGINS #####################################################
 WORKDIR /usr/share/ocsinventory-reports/ocsreports/download
 # uptime - Retrieve Machine Uptime
-RUN wget https://github.com/PluginsOCSInventory-NG/uptime/releases/download/1.1/uptime.zip
+RUN wget https://github.com/PluginsOCSInventory-NG/uptime/releases/download/2.0/uptime.zip
 # officepack 
-RUN wget https://github.com/PluginsOCSInventory-NG/officepack/releases/download/2.0/officepack.zip
+RUN wget https://github.com/PluginsOCSInventory-NG/officepack/releases/download/3.0/officepack.zip
 # vmware-vcenter
-RUN wget https://github.com/PluginsOCSInventory-NG/vmware-vcenter/releases/download/1.0/vmware.zip
+RUN wget https://github.com/PluginsOCSInventory-NG/vmware-vcenter/releases/download/2.0/vmware_vcenter.zip
 # winupdate
-RUN wget https://github.com/PluginsOCSInventory-NG/winupdate/releases/download/1.1/winupdate.zip
+RUN wget https://github.com/PluginsOCSInventory-NG/winupdate/releases/download/2.0/winupdate.zip
 ############################################################################
 COPY *.php /usr/share/ocsinventory-reports/ocsreports/
 # RUN chown root:apache /usr/share/ocsinventory-reports/ocsreports/removeinstall.php ;\
