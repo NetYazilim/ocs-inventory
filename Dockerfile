@@ -1,7 +1,7 @@
 FROM alpine:edge
 LABEL maintainer "Levent SAGIROGLU <LSagiroglu@gmail.com>"
 
-ARG VERSION=2.6RC
+ARG VERSION=2.6
 
 EXPOSE 80
 ENV OCS_DBHOST ""
@@ -26,7 +26,7 @@ RUN perl Makefile.PL ;\
 
 #############
 WORKDIR /tmp/ocs-setup/
-RUN wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/${VERSION}/OCSNG_UNIX_SERVER_2.6_RC.tar.gz
+RUN wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/${VERSION}/OCSNG_UNIX_SERVER_${VERSION}.tar.gz
 RUN tar -xvf OCSNG_UNIX_SERVER_*.tar.gz --strip 1
 WORKDIR /tmp/ocs-setup/Apache
 RUN perl Makefile.PL ;\
